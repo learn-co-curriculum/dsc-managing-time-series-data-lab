@@ -14,13 +14,10 @@ The lab will cover how to perform time series analysis while working with large 
 
 You will be able to:
 
-* Load time-series data using Pandas and perform time series indexing
+* Load time series data using Pandas and perform time series indexing
 * Perform index based slicing to create subsets of a time-series
 * Change the granularity of a time series 
-* Perform basic data cleasing operations on a time series
-* Getting time series data ready for further analysis
-
-
+* Perform basic data cleaning operations on time series data
 
 ## Let's get started!
 
@@ -38,6 +35,10 @@ import pandas.tseries
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 ```
+
+    /Users/lore.dirick/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+      from pandas.core import datetools
+
 
 ## Loading time series data
 The `StatsModels` library comes bundled with built-in datasets for experimentation and practice. A detailed description of these datasets can be found [here](http://www.statsmodels.org/dev/datasets/index.html). Using `StatsModels`, the time series datasets can be loaded straight into memory. 
@@ -58,7 +59,6 @@ Let's check the type of CO2 and also first 15 entries of CO2 dataframe as our fi
 
 ```python
 # Print the datatype of CO2 and check first 15 values
-
 print(type(CO2))
 print(CO2.head(15))
 
@@ -111,9 +111,8 @@ We can confirm these assumption in python by checking index values of a pandas d
 
 
 ```python
-# Confirm that date values are used for indexing purpose in the CO2 dataset by using DataSet.index property.
-print(CO2.index)
-
+# Confirm that date values are used for indexing purpose in the CO2 dataset 
+CO2.index
 
 # DatetimeIndex(['1958-03-29', '1958-04-05', '1958-04-12', '1958-04-19',
 #                '1958-04-26', '1958-05-03', '1958-05-10', '1958-05-17',
@@ -125,6 +124,9 @@ print(CO2.index)
 #               dtype='datetime64[ns]', length=2284, freq='W-SAT')
 ```
 
+
+
+
     DatetimeIndex(['1958-03-29', '1958-04-05', '1958-04-12', '1958-04-19',
                    '1958-04-26', '1958-05-03', '1958-05-10', '1958-05-17',
                    '1958-05-24', '1958-05-31',
@@ -133,6 +135,7 @@ print(CO2.index)
                    '2001-11-24', '2001-12-01', '2001-12-08', '2001-12-15',
                    '2001-12-22', '2001-12-29'],
                   dtype='datetime64[ns]', length=2284, freq='W-SAT')
+
 
 
 The output above shows that our dataset clearly fulfills the indexing requirements. Look at the last line:
@@ -145,7 +148,9 @@ The output above shows that our dataset clearly fulfills the indexing requiremen
 * `length=2284` shows the total number of entries in our timeseries data.
 * `freq='W-SAT'` tells us that we have 2,284 weekly (W) date stamps starting on Saturdays (SAT).
 
-Depending on the nature of analytical question, the resolution of timestamps can also be changed to hourly, daily, weekly, monthly, yearly etc. For our dataset, we can perform the analysis on monthly CO2 consumption values. This can be obtained by using the [`resample()` function](http://pandas.pydata.org/pandas-docs/stable/timeseries.html). Let's perform following data manipulations on our time series:
+## Resampling
+
+Remember that depepending on the nature of analytical question, the resolution of timestamps can also be changed to other frequencies. For this data set we can resample to monthly CO2 consumption values. This can be obtained by using the `resample() function`. Let's
 
 * Group the time-series into buckets representing 1 month using `resample()` function.
 * Apply a `mean()`function on each group (i.e. get monthly average).
@@ -153,8 +158,7 @@ Depending on the nature of analytical question, the resolution of timestamps can
 
 
 ```python
-# Group the timeseries into monthly buckets using resample('MS')
-# 'MS' refers to monthly start 
+# Group the timeseries into monthly buckets
 # Take the mean of each group 
 # get the first 10 elements of resulting timeseries
 
@@ -197,7 +201,7 @@ Looking at the index values, we can see that our timeseries now carries aggregat
 
 ### Time-series Index Slicing for Data Selection
 
-Pandas carries the ability to handle date stamp indices allowing quick and handy way of slicing data. For example, we can slice our dataset to only retrieve data points that come after the year 1990.
+Slice our dataset to only retrieve data points that come after the year 1990.
 
 
 ```python
@@ -211,7 +215,6 @@ CO2_monthly_mean['1990':]
 # 2001-11-01    369.375
 # 2001-12-01    371.020
 # Freq: MS, Name: co2, Length: 144, dtype: float64
-
 ```
 
 
@@ -282,7 +285,7 @@ CO2_monthly_mean['1990':]
 
 
 
-Similarly, we can also slice our timeseries to only retrieve values for a given time interval. Let's try to retrieve data starting from Jan 1990 to Jan 1991.
+Slice the time series for a given time interval. Let's try to retrieve data starting from Jan 1990 to Jan 1991.
 
 
 ```python
@@ -325,13 +328,13 @@ CO2_monthly_mean['1990-01-01':'1991-01-01']
 
 
 
-### Missing Values
+## Missing Values
 
-Its quite common for a timeseries dataset to have missing values as real world data tends to be messy and imperfect. Simplest way to detect missing values is either plotting the data and identifying disjoint areas of timeseries, or by using `DataFrame.isnull()` function to get list of all missing values. This function can be used with `sum()` to get a total count of all missing values. 
+Check if there are missing values in the data set.
 
 
 ```python
-# Get the total number of missing values in the timeseries
+# Get the total number of missing values in the time series
 CO2_monthly_mean.isnull().sum()
 
 # 5
@@ -344,17 +347,12 @@ CO2_monthly_mean.isnull().sum()
 
 
 
-For the monthly timeseries we have created above, this value tells us that we are missing data values for 5 months in total. Missing values can be handled in a multitude of ways. 
-* Drop the data elements with missing values (may result as low accuracy and loss of valueable information)
-* Fill in the missing values under a defined criteria 
-* Use advanced machine learning methods to predict the missing values. 
-
-For our experiment, we shall try to fill in the missing values using pandas `DataFrame.fillna()` function. We shall use The `bfill()` method as an argument/crietria for filling in Null values . `bfill()` (backward filling) looks for the next valid entry in the timeseries and fills the gaps with this value. 
+Remember that missing values can be filled in a multitude of ways. Look for the next valid entry in the time series and fills the gaps with this value. Next, check if your attempt was successful by checking for missing values again.
 
 
 ```python
-# Use fillna() with bfill() argument to perform backward filling of missing values
-# Use isnull() to check for missing values 
+# perform backward filling of missing values
+# check again for missing values
 
 CO2_final = CO2_monthly_mean.fillna(CO2_monthly_mean.ffill())
 CO2_final.isnull().sum()
@@ -369,8 +367,8 @@ CO2_final.isnull().sum()
 
 
 
-After performing above steps, out timeseries is now ready for visualisation and further analysis.
+Great! Now your time series are ready for visualization and further analysis.
 
 ## Summary
 
-In this introductory lab, we learnt how to create a time-series object in Python using Pandas. We learnt to fulfil all the requirements for a dataset to be classified as a time-series by ensuring  timestamp values as data index. Basic data handling techniques for getting time-series data ready for further analysis are also introduced. Students are advised to apply these techqniques to other time-series datasets as some may require much more cleansing than the one we saw in this lab. 
+In this introductory lab, we learnt how to create a time-series object in Python using Pandas. You learned how to check timestamp values as the data index and you learned about basic data handling techniques for getting time-series data ready for further analysis.
