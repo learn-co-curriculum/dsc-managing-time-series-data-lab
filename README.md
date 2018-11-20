@@ -15,7 +15,7 @@ The lab will cover how to perform time series analysis while working with large 
 You will be able to:
 
 * Load time series data using Pandas and perform time series indexing
-* Perform index based slicing to create subsets of a time-series
+* Perform index based slicing to create subsets of a time series
 * Change the granularity of a time series 
 * Perform basic data cleaning operations on time series data
 
