@@ -30,10 +30,7 @@ We will start the lab by loading the required libraries
 
 ```python
 # Load required libraries
-import pandas as pd
-import pandas.tseries
-import statsmodels.api as sm
-import matplotlib.pyplot as plt
+
 ```
 
     /Users/lore.dirick/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
@@ -50,8 +47,7 @@ We can bring in this data using the `load_pandas()`-method, which will allow us 
 
 ```python
 # Load the "co2" dataset from sm.datasets
-CO2_dataset = sm.datasets.co2.load_pandas()
-CO2 = CO2_dataset.data
+
 ```
 
 Let's check the type of CO2 and also first 15 entries of CO2 dataframe as our first exploratory step.
@@ -59,8 +55,6 @@ Let's check the type of CO2 and also first 15 entries of CO2 dataframe as our fi
 
 ```python
 # Print the datatype of CO2 and check first 15 values
-print(type(CO2))
-print(CO2.head(15))
 
 # datatype of CO2 is <class 'pandas.core.frame.DataFrame'>
 
@@ -112,7 +106,6 @@ We can confirm these assumption in python by checking index values of a pandas d
 
 ```python
 # Confirm that date values are used for indexing purpose in the CO2 dataset 
-CO2.index
 
 # DatetimeIndex(['1958-03-29', '1958-04-05', '1958-04-12', '1958-04-19',
 #                '1958-04-26', '1958-05-03', '1958-05-10', '1958-05-17',
@@ -162,10 +155,6 @@ Remember that depepending on the nature of analytical question, the resolution o
 # Take the mean of each group 
 # get the first 10 elements of resulting timeseries
 
-CO2_monthly= CO2['co2'].resample('MS')
-CO2_monthly_mean = CO2_monthly.mean()
-
-CO2_monthly_mean.head(10)
 
 # 1958-03-01    316.100000
 # 1958-04-01    317.200000
@@ -206,8 +195,6 @@ Slice our dataset to only retrieve data points that come after the year 1990.
 
 ```python
 # Slice the timeseries to contain data after year 1990. 
-
-CO2_monthly_mean['1990':]
 
 # 1990-01-01    353.650
 # 1990-02-01    354.650
@@ -290,7 +277,6 @@ Slice the time series for a given time interval. Let's try to retrieve data star
 
 ```python
 # Retrieve the data between 1st Jan 1990 to 1st Jan 1991
-CO2_monthly_mean['1990-01-01':'1991-01-01']
 
 # 1990-01-01    353.650
 # 1990-02-01    354.650
@@ -335,7 +321,6 @@ Check if there are missing values in the data set.
 
 ```python
 # Get the total number of missing values in the time series
-CO2_monthly_mean.isnull().sum()
 
 # 5
 ```
@@ -353,9 +338,6 @@ Remember that missing values can be filled in a multitude of ways. Look for the 
 ```python
 # perform backward filling of missing values
 # check again for missing values
-
-CO2_final = CO2_monthly_mean.fillna(CO2_monthly_mean.ffill())
-CO2_final.isnull().sum()
 
 # 0
 ```
