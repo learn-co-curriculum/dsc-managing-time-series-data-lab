@@ -24,7 +24,7 @@ You will be able to:
 We will start the lab by loading the required libraries 
 
 * `pandas` for data wrangling and manipulations  
-* `matplotlib` for visualising timeseries data 
+* `matplotlib` for visualizing time series data 
 * `statsmodels` primarily for bundled datasets 
 
 
@@ -76,7 +76,7 @@ With all the required packages imported and the CO2 dataset as a Dataframe ready
 
 ## Data Indexing
 
-You may have noticed that by default, the dates have been set as the index of our pandas DataFrame. While working with time series data in Python, it's important to always ensure that dates are used as index values and are set as a `timestamp` object. Timestamp is the pandas equivalent of python’s `Datetime` and is interchangeable with it in most cases. It’s the type used for the entries that make up a `DatetimeIndex`, and other timeseries oriented data structures in pandas. Further details can be found [here](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Timestamp.html).
+You may have noticed that by default, the dates have been set as the index of our pandas DataFrame. While working with time series data in Python, it's important to always ensure that dates are used as index values and are set as a `timestamp` object. Timestamp is the pandas equivalent of python’s `Datetime` and is interchangeable with it in most cases. It's the type used for the entries that make up a `DatetimeIndex`, and other time series oriented data structures in pandas. Further details can be found [here](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Timestamp.html).
 
 We can confirm these assumption in python by checking index values of a pandas dataframe with `DataFrame.index`. 
 
@@ -101,12 +101,12 @@ The output above shows that our dataset clearly fulfills the indexing requiremen
 
 
 * `dtype=datetime[ns]` field confirms that the index is made of timestamp objects.
-* `length=2284` shows the total number of entries in our timeseries data.
+* `length=2284` shows the total number of entries in our time series data.
 * `freq='W-SAT'` tells us that we have 2,284 weekly (W) date stamps starting on Saturdays (SAT).
 
 ## Resampling
 
-Remember that depepending on the nature of analytical question, the resolution of timestamps can also be changed to other frequencies. For this data set we can resample to monthly CO2 consumption values. This can be obtained by using the `resample() function`. Let's
+Remember that depending on the nature of analytical question, the resolution of timestamps can also be changed to other frequencies. For this data set we can resample to monthly CO2 consumption values. This can be obtained by using the `resample() function`. Let's
 
 * Group the time-series into buckets representing 1 month using `resample()` function.
 * Apply a `mean()`function on each group (i.e. get monthly average).
@@ -132,7 +132,7 @@ Remember that depepending on the nature of analytical question, the resolution o
 # Freq: MS, Name: co2, dtype: float64
 ```
 
-Looking at the index values, we can see that our timeseries now carries aggregated data on monthly terms, shown as `Freq: MS`. 
+Looking at the index values, we can see that our time series now carries aggregated data on monthly terms, shown as `Freq: MS`. 
 
 ### Time-series Index Slicing for Data Selection
 
@@ -197,4 +197,4 @@ Great! Now your time series are ready for visualization and further analysis.
 
 ## Summary
 
-In this introductory lab, we learnt how to create a time-series object in Python using Pandas. You learned how to check timestamp values as the data index and you learned about basic data handling techniques for getting time-series data ready for further analysis.
+In this introductory lab, you learned how to create a time-series object in Python using Pandas. You learned how to check timestamp values as the data index and you learned about basic data handling techniques for getting time-series data ready for further analysis.
