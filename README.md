@@ -197,4 +197,4 @@ Great! Now your time series are ready for visualization and further analysis.
 
 ## Summary
 
-In this introductory lab, you learned how to create a time-series object in Python using Pandas. You learned how to check timestamp values as the data index and you learned about basic data handling techniques for getting time-series data ready for further analysis.
+In this introductory lab, you learned how to create a time series object in Python using Pandas. You learned how to check timestamp values as the data index and you learned about basic data handling techniques for getting time-series data ready for further analysis.
