@@ -36,23 +36,83 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 ```
 
-    /Users/lore.dirick/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
-      from pandas.core import datetools
-
-
 ## Loading time series data
 The `StatsModels` library comes bundled with built-in datasets for experimentation and practice. A detailed description of these datasets can be found [here](http://www.statsmodels.org/dev/datasets/index.html). Using `StatsModels`, the time series datasets can be loaded straight into memory. 
 
 In this lab, we'll use the **"Atmospheric CO2 from Continuous Air Samples at Mauna Loa Observatory, Hawaii, U.S.A."**, containing CO2 samples from March 1958 to December 2001. Further details on this dataset are available [here](http://www.statsmodels.org/dev/datasets/generated/co2.html).
 
-We can bring in this data using the `load_pandas()`-method, which will allow us to read this data into a pandas dataframe by using `dataset.data`.  
+We can bring in this data using the `load()` method, which will allow us to read this data into a pandas dataframe by using `dataset["data"]` and setting the index to the time series data.  
 
 
 ```python
 # Load the "co2" dataset from sm.datasets
-CO2_dataset = sm.datasets.co2.load_pandas()
-CO2 = CO2_dataset.data
+data_set = sm.datasets.co2.load()
+# load in the data_set into pandas data_frame
+CO2 = pd.DataFrame(data=data_set["data"])
+# create index with frequency and periods
+index = pd.DatetimeIndex(data=CO2["date"].str.decode("utf-8"), freq='W-SAT', periods=CO2.date.size)
+# set index to date column
+CO2.set_index(index, inplace=True)
+# drop date column from table
+CO2.drop("date", inplace=True, axis=1)
+CO2.head()
+
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>co2</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1958-03-29</th>
+      <td>316.1</td>
+    </tr>
+    <tr>
+      <th>1958-04-05</th>
+      <td>317.3</td>
+    </tr>
+    <tr>
+      <th>1958-04-12</th>
+      <td>317.6</td>
+    </tr>
+    <tr>
+      <th>1958-04-19</th>
+      <td>317.5</td>
+    </tr>
+    <tr>
+      <th>1958-04-26</th>
+      <td>316.4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 Let's check the type of CO2 and also first 15 entries of CO2 dataframe as our first exploratory step.
 
@@ -84,6 +144,7 @@ print(CO2.head(15))
 
     <class 'pandas.core.frame.DataFrame'>
                   co2
+    date             
     1958-03-29  316.1
     1958-04-05  317.3
     1958-04-12  317.6
