@@ -38,12 +38,22 @@ The `StatsModels` library comes bundled with built-in datasets for experimentati
 
 In this lab, we'll use the **"Atmospheric CO2 from Continuous Air Samples at Mauna Loa Observatory, Hawaii, U.S.A."**, containing CO2 samples from March 1958 to December 2001. Further details on this dataset are available [here](http://www.statsmodels.org/dev/datasets/generated/co2.html).
 
-We can bring in this data using the `load_pandas()`-method, which will allow us to read this data into a pandas dataframe by using `dataset.data`.  
+We can bring in this data using the `load()` method, which will allow us to read this data into a pandas dataframe by using `dataset["data"]` and setting the index to the time series data.  
 
 
 ```python
-# Load the "co2" dataset from sm.datasets
 
+# Load the "co2" dataset from sm.datasets
+data_set = sm.datasets.co2.load()
+# load in the data_set into pandas data_frame
+CO2 = pd.DataFrame(data=data_set["data"])
+# create index with frequency and periods
+index = pd.DatetimeIndex(data=CO2["date"].str.decode("utf-8"), freq='W-SAT', periods=CO2.date.size)
+# set index to date column
+CO2.set_index(index, inplace=True)
+# drop date column from table
+CO2.drop("date", inplace=True, axis=1)
+CO2.head()
 ```
 
 Let's check the type of CO2 and also first 15 entries of CO2 dataframe as our first exploratory step.
