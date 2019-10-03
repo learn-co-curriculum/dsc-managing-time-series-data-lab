@@ -15,7 +15,7 @@ The lab will cover how to perform time series analysis while working with large 
 You will be able to:
 
 * Load time series data using Pandas and perform time series indexing
-* Perform index based slicing to create subsets of a time series
+* Perform index-based slicing to create subsets of a time series
 * Change the granularity of a time series 
 * Perform basic data cleaning operations on time series data
 
@@ -116,7 +116,7 @@ The output above shows that our dataset clearly fulfills the indexing requiremen
 
 ## Resampling
 
-Remember that depending on the nature of analytical question, the resolution of timestamps can also be changed to other frequencies. For this data set we can resample to monthly CO2 consumption values. This can be obtained by using the `resample() function`. Let's
+Remember that depending on the nature of the question, the resolution of timestamps can also be changed to other frequencies. For this data set, we can resample to monthly CO2 consumption values. This can be obtained by using the `resample() function`. Let's
 
 * Group the time-series into buckets representing 1 month using `resample()` function.
 * Apply a `mean()`function on each group (i.e. get monthly average).
