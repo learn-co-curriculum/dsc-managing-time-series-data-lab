@@ -15,17 +15,17 @@ The lab will cover how to perform time series analysis while working with large 
 You will be able to:
 
 * Load time series data using Pandas and perform time series indexing
-* Perform index based slicing to create subsets of a time series
-* Change the granularity of a time series 
+* Perform index-based slicing to create subsets of a time series
+* Change the granularity of a time series
 * Perform basic data cleaning operations on time series data
 
 ## Let's get started!
 
-We will start the lab by loading the required libraries 
+We will start the lab by loading the required libraries
 
 * `pandas` for data wrangling and manipulations  
-* `matplotlib` for visualizing time series data 
-* `statsmodels` primarily for bundled datasets 
+* `matplotlib` for visualizing time series data
+* `statsmodels` primarily for bundled datasets
 
 
 ```
@@ -34,7 +34,7 @@ We will start the lab by loading the required libraries
 ```
 
 ## Loading time series data
-The `StatsModels` library comes bundled with built-in datasets for experimentation and practice. A detailed description of these datasets can be found [here](http://www.statsmodels.org/dev/datasets/index.html). Using `StatsModels`, the time series datasets can be loaded straight into memory. 
+The `StatsModels` library comes bundled with built-in datasets for experimentation and practice. A detailed description of these datasets can be found [here](http://www.statsmodels.org/dev/datasets/index.html). Using `StatsModels`, the time series datasets can be loaded straight into memory.
 
 In this lab, we'll use the **"Atmospheric CO2 from Continuous Air Samples at Mauna Loa Observatory, Hawaii, U.S.A."**, containing CO2 samples from March 1958 to December 2001. Further details on this dataset are available [here](http://www.statsmodels.org/dev/datasets/generated/co2.html).
 
@@ -142,11 +142,11 @@ With all the required packages imported and the CO2 dataset as a Dataframe ready
 
 You may have noticed that by default, the dates have been set as the index of our pandas DataFrame. While working with time series data in Python, it's important to always ensure that dates are used as index values and are set as a `timestamp` object. Timestamp is the pandas equivalent of python’s `Datetime` and is interchangeable with it in most cases. It's the type used for the entries that make up a `DatetimeIndex`, and other time series oriented data structures in pandas. Further details can be found [here](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Timestamp.html).
 
-We can confirm these assumption in python by checking index values of a pandas dataframe with `DataFrame.index`. 
+We can confirm these assumption in python by checking index values of a pandas dataframe with `DataFrame.index`.
 
 
 ```
-# Confirm that date values are used for indexing purpose in the CO2 dataset 
+# Confirm that date values are used for indexing purpose in the CO2 dataset
 
 # DatetimeIndex(['1958-03-29', '1958-04-05', '1958-04-12', '1958-04-19',
 #                '1958-04-26', '1958-05-03', '1958-05-10', '1958-05-17',
@@ -175,7 +175,7 @@ The output above shows that our dataset clearly fulfills the indexing requiremen
 
 ## Resampling
 
-Remember that depending on the nature of analytical question, the resolution of timestamps can also be changed to other frequencies. For this data set we can resample to monthly CO2 consumption values. This can be obtained by using the `resample() function`. Let's
+Remember that depending on the nature of the question, the resolution of timestamps can also be changed to other frequencies. For this data set, we can resample to monthly CO2 consumption values. This can be obtained by using the `resample() function`. Let's
 
 * Group the time-series into buckets representing 1 month using `resample()` function.
 * Apply a `mean()`function on each group (i.e. get monthly average).
@@ -184,7 +184,7 @@ Remember that depending on the nature of analytical question, the resolution of 
 
 ```
 # Group the timeseries into monthly buckets
-# Take the mean of each group 
+# Take the mean of each group
 # get the first 10 elements of resulting timeseries
 
 
@@ -201,7 +201,7 @@ Remember that depending on the nature of analytical question, the resolution of 
 # Freq: MS, Name: co2, dtype: float64
 ```
 
-Looking at the index values, we can see that our time series now carries aggregated data on monthly terms, shown as `Freq: MS`. 
+Looking at the index values, we can see that our time series now carries aggregated data on monthly terms, shown as `Freq: MS`.
 
 ### Time-series Index Slicing for Data Selection
 
@@ -209,7 +209,7 @@ Slice our dataset to only retrieve data points that come after the year 1990.
 
 
 ```
-# Slice the timeseries to contain data after year 1990. 
+# Slice the timeseries to contain data after year 1990.
 
 # 1990-01-01    353.650
 # 1990-02-01    354.650
