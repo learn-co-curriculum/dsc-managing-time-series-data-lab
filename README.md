@@ -28,7 +28,7 @@ We will start the lab by loading the required libraries
 * `statsmodels` primarily for bundled datasets 
 
 
-```python
+```
 # Load required libraries
 
 ```
@@ -41,25 +41,79 @@ In this lab, we'll use the **"Atmospheric CO2 from Continuous Air Samples at Mau
 We can bring in this data using the `load()` method, which will allow us to read this data into a pandas dataframe by using `dataset["data"]` and setting the index to the time series data.  
 
 
-```python
-
+```
 # Load the "co2" dataset from sm.datasets
 data_set = sm.datasets.co2.load()
+
 # load in the data_set into pandas data_frame
 CO2 = pd.DataFrame(data=data_set["data"])
-# create index with frequency and periods
-index = pd.DatetimeIndex(data=CO2["date"].str.decode("utf-8"), freq='W-SAT', periods=CO2.date.size)
+CO2.rename(columns={"index": "date"}, inplace=True)
+
 # set index to date column
-CO2.set_index(index, inplace=True)
-# drop date column from table
-CO2.drop("date", inplace=True, axis=1)
+CO2.set_index('date', inplace=True)
+
 CO2.head()
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>co2</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1958-03-29</td>
+      <td>316.1</td>
+    </tr>
+    <tr>
+      <td>1958-04-05</td>
+      <td>317.3</td>
+    </tr>
+    <tr>
+      <td>1958-04-12</td>
+      <td>317.6</td>
+    </tr>
+    <tr>
+      <td>1958-04-19</td>
+      <td>317.5</td>
+    </tr>
+    <tr>
+      <td>1958-04-26</td>
+      <td>316.4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 Let's check the type of CO2 and also first 15 entries of CO2 dataframe as our first exploratory step.
 
 
-```python
+```
 # Print the datatype of CO2 and check first 15 values
 
 # datatype of CO2 is <class 'pandas.core.frame.DataFrame'>
@@ -91,7 +145,7 @@ You may have noticed that by default, the dates have been set as the index of ou
 We can confirm these assumption in python by checking index values of a pandas dataframe with `DataFrame.index`. 
 
 
-```python
+```
 # Confirm that date values are used for indexing purpose in the CO2 dataset 
 
 # DatetimeIndex(['1958-03-29', '1958-04-05', '1958-04-12', '1958-04-19',
@@ -102,6 +156,11 @@ We can confirm these assumption in python by checking index values of a pandas d
 #                '2001-11-24', '2001-12-01', '2001-12-08', '2001-12-15',
 #                '2001-12-22', '2001-12-29'],
 #               dtype='datetime64[ns]', length=2284, freq='W-SAT')
+```
+
+
+```
+
 ```
 
 The output above shows that our dataset clearly fulfills the indexing requirements. Look at the last line:
@@ -123,7 +182,7 @@ Remember that depending on the nature of analytical question, the resolution of 
 * Combine the result as one row per monthly group.
 
 
-```python
+```
 # Group the timeseries into monthly buckets
 # Take the mean of each group 
 # get the first 10 elements of resulting timeseries
@@ -149,7 +208,7 @@ Looking at the index values, we can see that our time series now carries aggrega
 Slice our dataset to only retrieve data points that come after the year 1990.
 
 
-```python
+```
 # Slice the timeseries to contain data after year 1990. 
 
 # 1990-01-01    353.650
@@ -163,7 +222,7 @@ Slice our dataset to only retrieve data points that come after the year 1990.
 Slice the time series for a given time interval. Let's try to retrieve data starting from Jan 1990 to Jan 1991.
 
 
-```python
+```
 # Retrieve the data between 1st Jan 1990 to 1st Jan 1991
 
 # 1990-01-01    353.650
@@ -187,7 +246,7 @@ Slice the time series for a given time interval. Let's try to retrieve data star
 Check if there are missing values in the data set.
 
 
-```python
+```
 # Get the total number of missing values in the time series
 
 # 5
@@ -196,7 +255,7 @@ Check if there are missing values in the data set.
 Remember that missing values can be filled in a multitude of ways. Look for the next valid entry in the time series and fills the gaps with this value. Next, check if your attempt was successful by checking for missing values again.
 
 
-```python
+```
 # perform backward filling of missing values
 # check again for missing values
 
