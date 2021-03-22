@@ -1,4 +1,3 @@
-
 # Managing Time Series Data - Lab
 
 ## Introduction
@@ -51,7 +50,7 @@ In the following cell:
 # Load the 'co2' dataset from sm.datasets
 data_set = sm.datasets.co2.load()
 
-# load in the data_set into pandas data_frame
+# load in the data_set into pandas dataframe
 CO2 = pd.DataFrame(data=data_set['data'])
 CO2.rename(columns={'index': 'date'}, inplace=True)
 
@@ -61,24 +60,24 @@ CO2.set_index('date', inplace=True)
 CO2.head()
 ```
 
-Let's check the data type of `CO2` and also print the first 15 entries of `CO2` as our first exploratory step.
+Let's check the data type of `CO2` and also display the first 15 entries of `CO2` as our first exploratory step.
 
 
 ```python
 # Print the data type of CO2 
 
 
-# Print the first 15 rows of CO2
+# Display the first 15 rows of CO2
 
 ```
 
-With all the required packages imported and the `CO2` dataset as a Dataframe ready to go, we can move on to indexing our data.
+With all the required packages imported and the `CO2` dataset as a dataframe ready to go, we can move on to indexing our data.
 
 ## Date Indexing
 
 While working with time series data in Python, having dates (or datetimes) in the index can be very helpful, especially if they are of `DatetimeIndex` type. Further details can be found [here](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Timestamp.html).
 
-Print the `.index` attribute of the `CO2` DataFrame: 
+Display the `.index` attribute of the `CO2` DataFrame: 
 
 
 ```python
@@ -111,7 +110,7 @@ CO2_monthly = None
 # Take the mean of each group 
 CO2_monthly_mean = None
 
-# Get the first 10 elements of resulting time series
+# Display the first 10 elements of resulting time series
 
 ```
 
@@ -163,4 +162,4 @@ Great! Now your time series data are ready for visualization and further analysi
 
 ## Summary
 
-In this introductory lab, you learned how to create a time series object in Python using Pandas. You learned how to check timestamp values as the data index and you learned about basic data handling techniques for time-series data for further analysis.
+In this introductory lab, you learned how to load and manipulate time series data in Python using Pandas. You confirmed that the index was set appropriately, performed queries to subset the data, and practiced identifying and addressing missing values.
