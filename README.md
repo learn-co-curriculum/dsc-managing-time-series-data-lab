@@ -1,4 +1,3 @@
-
 # Managing Time Series Data - Lab
 
 ## Introduction
@@ -61,7 +60,7 @@ In the following cell:
 # Load the 'co2' dataset from sm.datasets
 data_set = sm.datasets.co2.load()
 
-# load in the data_set into pandas data_frame
+# load in the data_set into pandas dataframe
 CO2 = pd.DataFrame(data=data_set['data'])
 CO2.rename(columns={'index': 'date'}, inplace=True)
 
@@ -77,7 +76,7 @@ CO2.head()
 # Load the 'co2' dataset from sm.datasets
 data_set = sm.datasets.co2.load()
 
-# load in the data_set into pandas data_frame
+# load in the data_set into pandas dataframe
 CO2 = pd.DataFrame(data=data_set['data'])
 CO2.rename(columns={'index': 'date'}, inplace=True)
 
@@ -86,10 +85,6 @@ CO2.set_index('date', inplace=True)
 
 CO2.head()
 ```
-
-    //anaconda3/lib/python3.7/site-packages/statsmodels/datasets/utils.py:344: FutureWarning: load will return datasets containing pandas DataFrames and Series in the Future.  To suppress this message, specify as_pandas=False
-      FutureWarning)
-
 
 
 
@@ -146,14 +141,14 @@ CO2.head()
 
 
 
-Let's check the data type of `CO2` and also print the first 15 entries of `CO2` as our first exploratory step.
+Let's check the data type of `CO2` and also display the first 15 entries of `CO2` as our first exploratory step.
 
 
 ```python
 # Print the data type of CO2 
 
 
-# Print the first 15 rows of CO2
+# Display the first 15 rows of CO2
 
 ```
 
@@ -163,37 +158,115 @@ Let's check the data type of `CO2` and also print the first 15 entries of `CO2` 
 # Print the data type of CO2 
 print(type(CO2))
 
-# Print the first 15 rows of CO2
-print(CO2.head(15))
+# Display the first 15 rows of CO2
+CO2.head(15)
 ```
 
     <class 'pandas.core.frame.DataFrame'>
-                  co2
-    date             
-    1958-03-29  316.1
-    1958-04-05  317.3
-    1958-04-12  317.6
-    1958-04-19  317.5
-    1958-04-26  316.4
-    1958-05-03  316.9
-    1958-05-10    NaN
-    1958-05-17  317.5
-    1958-05-24  317.9
-    1958-05-31    NaN
-    1958-06-07    NaN
-    1958-06-14    NaN
-    1958-06-21    NaN
-    1958-06-28    NaN
-    1958-07-05  315.8
 
 
-With all the required packages imported and the `CO2` dataset as a Dataframe ready to go, we can move on to indexing our data.
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>co2</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1958-03-29</th>
+      <td>316.1</td>
+    </tr>
+    <tr>
+      <th>1958-04-05</th>
+      <td>317.3</td>
+    </tr>
+    <tr>
+      <th>1958-04-12</th>
+      <td>317.6</td>
+    </tr>
+    <tr>
+      <th>1958-04-19</th>
+      <td>317.5</td>
+    </tr>
+    <tr>
+      <th>1958-04-26</th>
+      <td>316.4</td>
+    </tr>
+    <tr>
+      <th>1958-05-03</th>
+      <td>316.9</td>
+    </tr>
+    <tr>
+      <th>1958-05-10</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1958-05-17</th>
+      <td>317.5</td>
+    </tr>
+    <tr>
+      <th>1958-05-24</th>
+      <td>317.9</td>
+    </tr>
+    <tr>
+      <th>1958-05-31</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1958-06-07</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1958-06-14</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1958-06-21</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1958-06-28</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1958-07-05</th>
+      <td>315.8</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+With all the required packages imported and the `CO2` dataset as a dataframe ready to go, we can move on to indexing our data.
 
 ## Date Indexing
 
 While working with time series data in Python, having dates (or datetimes) in the index can be very helpful, especially if they are of `DatetimeIndex` type. Further details can be found [here](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Timestamp.html).
 
-Print the `.index` attribute of the `CO2` DataFrame: 
+Display the `.index` attribute of the `CO2` DataFrame: 
 
 
 ```python
@@ -247,7 +320,7 @@ CO2_monthly = None
 # Take the mean of each group 
 CO2_monthly_mean = None
 
-# Get the first 10 elements of resulting time series
+# Display the first 10 elements of resulting time series
 
 ```
 
@@ -260,7 +333,7 @@ CO2_monthly = CO2['co2'].resample('MS')
 # Take the mean of each group 
 CO2_monthly_mean = CO2_monthly.mean()
 
-# Get the first 10 elements of resulting time series
+# Display the first 10 elements of resulting time series
 CO2_monthly_mean.head(10)
 ```
 
@@ -310,57 +383,7 @@ CO2_monthly_mean['1990':]
     1990-03-01    355.480
     1990-04-01    356.175
     1990-05-01    357.075
-    1990-06-01    356.080
-    1990-07-01    354.675
-    1990-08-01    352.900
-    1990-09-01    350.940
-    1990-10-01    351.225
-    1990-11-01    352.700
-    1990-12-01    354.140
-    1991-01-01    354.675
-    1991-02-01    355.650
-    1991-03-01    357.200
-    1991-04-01    358.600
-    1991-05-01    359.250
-    1991-06-01    358.180
-    1991-07-01    356.050
-    1991-08-01    353.860
-    1991-09-01    352.125
-    1991-10-01    352.250
-    1991-11-01    353.740
-    1991-12-01    355.025
-    1992-01-01    355.900
-    1992-02-01    356.680
-    1992-03-01    357.900
-    1992-04-01    359.075
-    1992-05-01    359.540
-    1992-06-01    359.125
                    ...   
-    1999-07-01    369.000
-    1999-08-01    366.700
-    1999-09-01    364.675
-    1999-10-01    365.140
-    1999-11-01    366.650
-    1999-12-01    367.900
-    2000-01-01    369.020
-    2000-02-01    369.375
-    2000-03-01    370.400
-    2000-04-01    371.540
-    2000-05-01    371.650
-    2000-06-01    371.625
-    2000-07-01    369.940
-    2000-08-01    367.950
-    2000-09-01    366.540
-    2000-10-01    366.725
-    2000-11-01    368.125
-    2000-12-01    369.440
-    2001-01-01    370.175
-    2001-02-01    371.325
-    2001-03-01    372.060
-    2001-04-01    372.775
-    2001-05-01    373.800
-    2001-06-01    373.060
-    2001-07-01    371.300
     2001-08-01    369.425
     2001-09-01    367.880
     2001-10-01    368.050
@@ -420,7 +443,7 @@ Find the total number of missing values in the dataset.
 ```python
 # __SOLUTION__ 
 # Find the total number of missing values in the time series
-CO2_monthly_mean.isnull().sum()
+CO2_monthly_mean.isna().sum()
 ```
 
 
@@ -448,10 +471,10 @@ CO2_final = None
 ```python
 # __SOLUTION__ 
 # Perform backward filling of missing values
-CO2_final = CO2_monthly_mean.ffill()
+CO2_final = CO2_monthly_mean.bfill()
 
 # Find the total number of missing values in the time series
-CO2_final.isnull().sum()
+CO2_final.isna().sum()
 ```
 
 
@@ -465,4 +488,4 @@ Great! Now your time series data are ready for visualization and further analysi
 
 ## Summary
 
-In this introductory lab, you learned how to create a time series object in Python using Pandas. You learned how to check timestamp values as the data index and you learned about basic data handling techniques for time-series data for further analysis.
+In this introductory lab, you learned how to load and manipulate time series data in Python using Pandas. You confirmed that the index was set appropriately, performed queries to subset the data, and practiced identifying and addressing missing values.
