@@ -13,7 +13,7 @@ The lab will cover how to perform time series analysis while working with large 
 
 You will be able to:
 
-- Load time series data using Pandas and perform time series indexing 
+- Load time series data using pandas and perform time series indexing 
 - Perform data cleaning operation on time series data 
 - Change the granularity of a time series 
 
@@ -34,41 +34,24 @@ Import the following libraries:
 ```
 
 ## Loading time series data
-The `statsModels` library comes bundled with built-in datasets for experimentation and practice. A detailed description of these datasets can be found [here](http://www.statsmodels.org/dev/datasets/index.html). Using `statsModels`, the time series datasets can be loaded straight into memory. 
+The `statsmodels` library comes bundled with built-in datasets for experimentation and practice. A detailed description of these datasets can be found [here](http://www.statsmodels.org/dev/datasets/index.html). Using `statsmodels`, the time series datasets can be loaded straight into memory. 
 
 In this lab, we'll use the **Atmospheric CO2 from Continuous Air Samples at Mauna Loa Observatory, Hawaii, U.S.A.**, containing CO2 samples from March 1958 to December 2001. Further details on this dataset are available [here](http://www.statsmodels.org/dev/datasets/generated/co2.html).
 
-In the following cell: 
+In the following cell we: 
 
-- We loaded the `co2` dataset using the `.load()` method 
+- Load the `co2` dataset using the `.load()` method 
 - Converted this into a pandas DataFrame 
-- Renamed the columns 
-- Set the `'date'` column as index 
 
 
 ```python
+# Run this cell without changes
+
 # Load the 'co2' dataset from sm.datasets
 data_set = sm.datasets.co2.load()
 
 # load in the data_set into pandas dataframe
 CO2 = pd.DataFrame(data=data_set['data'])
-CO2.rename(columns={'index': 'date'}, inplace=True)
-
-# set index to date column
-CO2.set_index('date', inplace=True)
-
-CO2.head()
-```
-
-Let's check the data type of `CO2` and also display the first 15 entries of `CO2` as our first exploratory step.
-
-
-```python
-# Print the data type of CO2 
-
-
-# Display the first 15 rows of CO2
-
 ```
 
 With all the required packages imported and the `CO2` dataset as a dataframe ready to go, we can move on to indexing our data.
@@ -77,18 +60,34 @@ With all the required packages imported and the `CO2` dataset as a dataframe rea
 
 While working with time series data in Python, having dates (or datetimes) in the index can be very helpful, especially if they are of `DatetimeIndex` type. Further details can be found [here](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Timestamp.html).
 
-Display the `.index` attribute of the `CO2` DataFrame: 
+The exact structure of the data from `sm.datasets` has changed over time depending on the version of StatsModels. So below we check whether the index is already a `DatetimeIndex`, and if it isn't, we set it to be one. Either way we'll also set the name of the index to be `date`.
 
 
 ```python
-# Confirm that date values are used for indexing purpose in the CO2 dataset 
+# Run this cell without changes
 
+# Confirm that date values are used for indexing purpose in the CO2 dataset 
+if isinstance(CO2.index, pd.DatetimeIndex):
+    CO2.index.name = 'date'
+else:
+    CO2.rename(columns={'index':'date'}, inplace=True)
+    CO2.set_index('date', inplace=True)
+    
+CO2.head()
+```
+
+We can also inspect the index itself:
+
+
+```python
+# Run this cell without changes
+CO2.index
 ```
 
 The output above shows that our dataset clearly fulfills the indexing requirements. Look at the last line:
 
 
-> **dtype='datetime64[ns]', length=2284, freq='W-SAT'**
+> **dtype='datetime64[ns]',... length=2284,...'**
 
 
 * `dtype=datetime[ns]` field confirms that the index is made of timestamp objects.
@@ -162,4 +161,4 @@ Great! Now your time series data are ready for visualization and further analysi
 
 ## Summary
 
-In this introductory lab, you learned how to load and manipulate time series data in Python using Pandas. You confirmed that the index was set appropriately, performed queries to subset the data, and practiced identifying and addressing missing values.
+In this introductory lab, you learned how to load and manipulate time series data in Python using pandas. You confirmed that the index was set appropriately, performed queries to subset the data, and practiced identifying and addressing missing values.
